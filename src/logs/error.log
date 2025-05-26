@@ -1,0 +1,13 @@
+
+warn: El tipo no es ObjectId {"timestamp":"2025-05-23T15:03:23.564Z"}
+warn: El tipo no es ObjectId {"timestamp":"2025-05-24T21:58:31.042Z"}
+warn: El tipo no es ObjectId {"timestamp":"2025-05-24T21:59:12.044Z"}
+warn: El tipo no es ObjectId {"timestamp":"2025-05-24T22:00:14.639Z"}
+warn: El tipo no es ObjectId {"timestamp":"2025-05-24T22:00:24.199Z"}
+warn: El tipo no es ObjectId {"timestamp":"2025-05-24T22:08:37.023Z"}
+warn: El tipo no es ObjectId {"error":"INVALID_PARAM","timestamp":"2025-05-24T22:14:42.564Z"}
+fatal: Error FATAL {"timestamp":"2025-05-25T15:49:04.047Z"}
+error: Error ERROR {"timestamp":"2025-05-25T15:49:04.050Z"}
+fatal: Error FATAL {"timestamp":"2025-05-25T15:51:36.839Z"}
+error: Error ERROR {"timestamp":"2025-05-25T15:51:36.841Z"}
+error: Error en generateData: ReferenceError: usersArray is not defined {"timestamp":"2025-05-25T22:46:03.291Z"}
