@@ -2,21 +2,14 @@ import winston from "winston"
 
 let enviroment = "development";
 
-const customLevels = {
-    levels: {fatal: 0, error: 1, warn: 2, info: 3, http: 4, debug: 5},
-    colors: {fatal: "red", error: "magenta", warn: "yellow", info: "blue", http: "cian", debug: "grey"}
-};
-winston.addColors(customLevels.colors)
-
 export const logger = winston.createLogger({
-    levels: customLevels.levels,
-
+    levels: {fatal: 0, error: 1, warn: 2, info: 3, http: 4, debug: 5},
     transports: [
         new winston.transports.Console({
             level: enviroment === "development" ? "debug" : "info",
             format: winston.format.combine(
                 winston.format.timestamp(),
-                winston.format.colorize(),
+                winston.format.colorize({colors: {fatal: "red", error: "magenta", warn: "yellow", info: "blue", http: "cyan", debug: "grey"}}),
                 winston.format.simple()
             )
         }),
@@ -30,3 +23,9 @@ export const logger = winston.createLogger({
         })
     ]
 });
+
+export const middLogg=(req, res, next)=>{
+    req.logger=logger
+
+    next()
+}

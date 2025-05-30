@@ -3,6 +3,7 @@ import petModel from "./models/Pet.js";
 export default class Pet {
 
     get = (params) =>{
+        //throw new Error("Error forzado en el DAO de pet");
         return petModel.find(params)
     }
 

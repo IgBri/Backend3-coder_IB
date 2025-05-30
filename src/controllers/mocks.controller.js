@@ -30,9 +30,15 @@ const createMockingPet = async (req, res) => {
     };
 }
 
-const createMockingUser = async (req, res) => {
+const createMockingUser = async (req, res, next) => {
     try {
         const { quantity } = req.query;
+
+        const qty = Number(quantity);
+        if(qty === 0){
+            throw new Error("Error forzado, qty = 0")
+        };
+
         logger.debug("Cantidad del req.query: ", { quantity })
         let users = [];
         for (let i = 0; i < quantity; i++) {
@@ -51,14 +57,15 @@ const createMockingUser = async (req, res) => {
         logger.info("Users creados: ", { users })
         res.status(200).send({ status: "success", payload: users })
     } catch (error) {
-        logger.error("Hubo un error 500: ", { error })
-        res.status(500).send(error)
+        // logger.error("Hubo un error 500: ", { error })
+        // res.status(500).send(error)
+        logger.error("Error generado en createMockingUser")
+        next(error)
     };
 }
 
-const generateData = async (req, res) => {
+const generateData = async (req, res, next) => {
     try {
-
         const { users, pets } = req.query;
         if (!users || !pets) return res.status(400).send({ status: "error", error: errorTypes._QUANTITY_DATA });
 

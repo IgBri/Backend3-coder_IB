@@ -27,6 +27,3 @@ export const generateUser = async () => {
         role
     }
 };
-
-//const user = generateUser();
-//console.log(user)
