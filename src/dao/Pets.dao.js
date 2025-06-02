@@ -12,11 +12,12 @@ export default class Pet {
     }
 
     save = (doc) =>{
+        //throw new Error("Error forzado en el DAO de pet");
         return petModel.create(doc);
     }
 
     update = (id,doc) =>{
-        return petModel.findByIdAndUpdate(id,{$set:doc})
+        return petModel.findByIdAndUpdate(id,{$set:doc}, {new: true})
     }
 
     delete = (id) =>{
