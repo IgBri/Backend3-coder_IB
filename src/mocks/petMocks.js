@@ -8,6 +8,7 @@ export const generatePet = () => {
     return {
         name,
         specie,
-        birthDate
+        birthDate,
+        mock: true
     }
 };

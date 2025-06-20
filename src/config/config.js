@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 const program = new Command();
 
 program
+    .allowUnknownOption(true)
     .option("--mode <mode>", "Modo de trabajo", "development")
     .option("-p <port>", "Puerto del servidor", 8080)
 program.parse();
@@ -15,7 +16,7 @@ dotenv.config({
 });
 
 export default {
-    enviroment: program.opts().mode,
+    //enviroment: program.opts().mode,
     port: process.env.PORT,
     mongoURL: process.env.MONGO_URL
 }

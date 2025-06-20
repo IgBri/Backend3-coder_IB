@@ -1,10 +1,8 @@
 import {fakerES_MX as fa} from "@faker-js/faker";
 import { createHash } from "../utils/index.js";
-import { logger } from "../utils/logger.js";
 
 async function encriptedPassword () {
     const password = await createHash("coder123");
-    logger.info("Password generado: ", {password}); 
     return password;
 };
 
