@@ -36,7 +36,7 @@ const register = async (req, res, next) => {
         }
         res.send({ status: "success", payload: result._id });
     } catch (error) {
-        logger.warn(errorTypes.REGISTER);
+        logger.warn(error.message);
         next(error);
     };
 };
@@ -66,7 +66,7 @@ const login = async (req, res, next) => {
         const token = jwt.sign(userDto, 'tokenSecretJWT', { expiresIn: "1h" });
         res.cookie('coderCookie', token, { maxAge: 3600000 }).send({ status: "success", message: "Logged in"});
     } catch (error) {
-        logger.warn("login error: ", error)
+        logger.warn(error.message)
         next(error);
     };
 };
@@ -85,10 +85,10 @@ const current = async (req, res, next) => {
         };
         res.send({ status: "success", payload: user })
     } catch (error) {
-        logger.warn("current error", {error: error.message});
+        logger.warn(error.message);
         next(error);
-    }
-}
+    };
+};
 
 const unprotectedLogin = async (req, res) => {
     const { email, password } = req.body;

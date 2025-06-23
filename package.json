@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
-    "test": "npx mocha ./test/**/*.test.js --exit"
+    "start:dev": "nodemon src/app.js --mode development",
+    "start:prod": "nodemon src/app.js --mode production",
+    "start:test": "nodemon src/app.js --mode testing",
+    "test": "npx mocha ./test/**/*.test.js"
   },
   "keywords": [],
   "author": "",

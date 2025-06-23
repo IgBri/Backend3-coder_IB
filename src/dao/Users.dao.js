@@ -17,7 +17,7 @@ export default class Users {
 
     update = (id,doc) =>{
         //throw new Error("Error forzado")
-        return userModel.findByIdAndUpdate(id,{$set:doc})
+        return userModel.findByIdAndUpdate(id,{$set:doc}, {new: true})
     }
 
     delete = (id) =>{

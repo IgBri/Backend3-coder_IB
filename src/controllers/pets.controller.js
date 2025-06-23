@@ -68,7 +68,7 @@ const updatePet = async (req, res, next) => {
             CustomError.generateError(errorTypes.TYPE_DATA, "El id ingresado es invalido", "No es del typeof object", errorTypesCodes.TIPO_DE_DATOS);
         }
         const result = await petsService.update(petId, petUpdateBody);
-        res.status(200).send({ status: "success", message: "pet updated" })
+        res.status(200).send({ status: "success", message: "pet updated", payloadPet: result })
     } catch (error) {
         logger.warn(error.message);
         next(error);

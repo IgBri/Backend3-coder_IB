@@ -18,7 +18,6 @@ import { logger, middLogg } from './utils/logger.js';
 //Open API specification
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
-import { url } from 'inspector';
 
 const options = {
     definition: {
@@ -47,7 +46,7 @@ const options = {
 }
 
 const specification = swaggerJSDoc(options);
-console.log(specification);
+// console.log(specification);
 
 
 
@@ -89,5 +88,4 @@ app.use(errorHandler)
 app.listen(PORT, () => logger.info(`Listening on ${PORT}`))
 
 //Informacion secundaria
-logger.info(`Modo de trabajo: ${config.enviroment}`)
-logger.info(`Puerto utilizado: ${config.port}`)
+logger.info(`Servidor activo en puerto ${config.port}, en entorno de ${config.enviroment}`)
