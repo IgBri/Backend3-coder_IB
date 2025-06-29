@@ -37,8 +37,8 @@ describe("Sessions router TEST", function () {
     });
     after(async function () {
         try {
-            // Habilitar la siguiente linea solo para testear individualmente este archivo de teest: 
-                //await mongoose.connection.collection("users").deleteMany({email: this.userMock.email});
+            //Habilitar la siguiente linea solo para testear individualmente este archivo de teest: 
+            await mongoose.connection.collection("users").deleteMany({email: this.userMock.email});
             await mongoose.connection.close();
             logger.debug("CICLO DE TEST FINALIZADO");
         } catch (error) {
@@ -59,14 +59,15 @@ describe("Sessions router TEST", function () {
     it("Test /api/sessions/login - method POST - Create cookie", async function () {
         logger.info("Iniciando login method test");
         let {body, status, headers} = await requester.post("/api/sessions/login").send(this.loginUserMock);
-        
         this.cookie = headers["set-cookie"];
         let nombreCookie = this.cookie[0].split("=")[0];
 
-        expect(nombreCookie).to.be.eq("coderCookie")
-        expect(body).to.have.property("status").and.to.be.eq("success");
-        expect(body).to.have.property("message").and.to.be.eq("Logged in");
-        expect(nombreCookie).to.be.eq("coderCookie");
+        expect(nombreCookie).to.be.eq(process.env.COOKIE_VALUE)
+        expect(body).to.have.property("status").and.to.be.a("string").and.to.be.eq("success");
+        expect(body).to.have.property("message").and.to.be.a("string").and.to.be.eq("Logged in");
+        expect(body).to.have.property("loggedAt").and.to.be.a("string")
+        expect(new Date(body.loggedAt).toLocaleString).not.to.be.eq("Invalid Date");
+        expect(new Date(body.loggedAt)).to.be.below(new Date());
         expect(status).to.be.eq(200);
     });
     it("Test /api/sessions/current - method GET - Vallidate cookie", async function () {

@@ -20,6 +20,11 @@ export default class Users {
         return userModel.findByIdAndUpdate(id,{$set:doc}, {new: true})
     }
 
+    updateWithFile = (id,doc) =>{
+        //throw new Error("Error forzado")
+        return userModel.findByIdAndUpdate(id,{$push: {documents: doc}}, {new: true})
+    }
+
     delete = (id) =>{
         return userModel.findByIdAndDelete(id);
     }

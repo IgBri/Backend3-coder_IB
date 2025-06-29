@@ -58,14 +58,13 @@ const updatePet = async (req, res, next) => {
         const petUpdateBody = req.body;
         const petId = req.params.pid;
         const typePetId = mongoose.isValidObjectId(petId);
-
         if (!petUpdateBody.name || !petUpdateBody.specie || !petUpdateBody.birthDate || !petId) {
             logger.debug(errorTypes.PARAMS)
-            CustomError.generateError(errorTypes.PARAMS, "Informacion para editar la mascota incompleta", "Faltan campos por completar", errorTypesCodes.ARGUMENTOS_INVALIDOS);
+            CustomError.generateError(errorTypes.PARAMS, "Informacion para editar la mascota incompleta", "Faltan campos por completar", errorTypesCodes.INVALID_DATA);
         };
         if (typeof petId !== "string" || typePetId === false) {
             logger.debug(errorTypes.TYPE_DATA);
-            CustomError.generateError(errorTypes.TYPE_DATA, "El id ingresado es invalido", "No es del typeof object", errorTypesCodes.TIPO_DE_DATOS);
+            CustomError.generateError(errorTypes.TYPE_DATA, "El id ingresado es invalido", "No es del typeof object", errorTypesCodes.TYPE_DATA);
         }
         const result = await petsService.update(petId, petUpdateBody);
         res.status(200).send({ status: "success", message: "pet updated", payloadPet: result })
@@ -100,6 +99,10 @@ const createPetWithImage = async (req, res, next) => {
         const { name, specie, birthDate } = req.body;
         if (!name || !specie || !birthDate || !file) {
             logger.debug(errorTypes.PARAMS);
+            console.log("name: ", name)
+            console.log("specie: ", specie)
+            console.log("birthDate: ", birthDate)
+            console.log("file: ", file)
             CustomError.generateError(errorTypes.PARAMS, "Campos incompletos para crear la mascota con imagen", "Campos vacios o incompletos", errorTypesCodes.INVALID_DATA);
         }
         const pet = PetDTO.getPetInputFrom({

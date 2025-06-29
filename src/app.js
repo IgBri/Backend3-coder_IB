@@ -11,10 +11,6 @@ import mocksRouter from './routes/mocks.router.js';
 
 import { errorHandler } from './middlewares/errorHandler.js';
 import { logger, middLogg } from './utils/logger.js';
-
-
-
-
 //Open API specification
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
@@ -23,7 +19,7 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Documentacion de usuarios | User",
+            title: "ADOPTME Documentation | IB",
             version: "1.0.0",
             description: "Posible texto de descripcion"
         },
@@ -48,12 +44,20 @@ const options = {
 const specification = swaggerJSDoc(options);
 // console.log(specification);
 
-
-
-
 const app = express();
 const PORT = process.env.PORT || 8080;
-const connection = mongoose.connect(config.mongoURL)
+//const connection = mongoose.connect(config.mongoURL)
+
+const connectDB = async () => {
+    try {
+        await mongoose.connect(config.mongoURL)
+        console.log("Coneccion a DB exitosa")
+    } catch (error) {
+        console.log("Error al conectar la base de datos:", error)
+    }
+}
+await connectDB()
+
 
 //app.use(middLogg)
 app.use(express.json());

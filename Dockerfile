@@ -1,4 +1,4 @@
-FROM node:20.11.0
+FROM node:22.16.0
 
 WORKDIR /app
 
@@ -8,6 +8,6 @@ RUN npm install
 
 COPY ./src ./src
 
-EXPOSE 3000
+EXPOSE 8085
 
 CMD ["npm","start"]

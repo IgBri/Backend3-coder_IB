@@ -10,7 +10,9 @@ export default class UserRepository extends GenericRepository{
         return this.getBy({email});
     }
     getUserById = (id) =>{
-        return this.getBy({_id:id})
+        return this.getBy({_id:id});
     }
-    
+    updateWithFile = (id,doc) => {
+        return this.updateFile(id,doc);
+    }
 }

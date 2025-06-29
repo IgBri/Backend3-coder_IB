@@ -35,5 +35,6 @@ export default {
     port: process.env.PORT,
     mongoURL: process.env.MONGO_URL,
     cookieCode: process.env.COOKIE_VALUE,
-    enviroment: program.opts().mode 
+    enviroment: program.opts().mode,
+    jwtCode: process.env.JWT_SECRET
 }

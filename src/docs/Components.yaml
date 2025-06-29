@@ -25,9 +25,9 @@ components:
           type: array
       example:
         _id: ObjectId(´684496c62e77147fd16409b8´)
-        first_name: Ignacio
-        last_name: Brizuela
-        email: brinacho@hotmail.como
+        first_name: Nombre de usuario
+        last_name: Apellido del usuario
+        email: ejemplo@ejemplo.com
         password: coder123
     Pet:
       type: object
@@ -88,7 +88,7 @@ components:
           example: error
         errorName:
           type: string
-          example: INVALID_PARAMS
+          example: INVALID_PARAMS || TYPE_DATA
         message:
           type: string
           example: Mensaje del error
@@ -121,9 +121,9 @@ components:
           type: string
           description: Contraseña determinada por el usuario
       example:
-        first_name: Ignacio
-        last_name: Brizuela
-        email: brinacho@hotmail.como
+        first_name: Nombre del usuario
+        last_name: Apellido del usuario
+        email: ejemplo@ejemplo.com
         password: coder123
     createPet:
       type: object
@@ -140,7 +140,7 @@ components:
       example:
         name: Ipa
         specie: Collie
-        birthDate: AAAA-MM-DD
+        birthDate: 2024-01-13
     getUser:
       type: object
       properties:
@@ -170,3 +170,4 @@ components:
               example: user
             pet: 
               type: array
+    

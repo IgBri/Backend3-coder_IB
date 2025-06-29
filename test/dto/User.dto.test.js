@@ -1,36 +1,22 @@
 import UserDTO from "../../src/dto/User.dto.js";
 import {describe, it} from "mocha";
 import {expect} from "chai";
-//import Assert from "assert"
+import { generateUser } from "../../src/mocks/userMocks.js";
+import { logger } from "../../src/utils/logger.js";
 
-//const assert = Assert.strict;
+describe("UsersDTO test", async function () {
+    this.userMock;
+    
+    before(async function () {
+        this.userMock = await generateUser();
+    });
 
-describe("Pruebas UsersDTO", () => {
-    let userMock = {
-            first_name: "Ignacio",
-            last_name: "Brizuela",
-            email: "brinacho@hotmail.com",
-            password: "ipa123",
-            role: "user"
-        }
-    //before, etc...?
+    it("User DTO test", async function () {
+        logger.info("Iniciando UserDTO test");
+        let resultado = UserDTO.getUserTokenFrom(this.userMock)
 
-    it("Si envio un usuario al DTO con las propiedades first_name y last:name, me devuelve un name con la concatenacion de ambos", () => {
-        let resultado = UserDTO.getUserTokenFrom(userMock)
-        console.log("resultado: ", resultado);
-
-        //assert(resultado.name, `${userMock.first_name} ${userMock.last_name}`)
-
-        expect(resultado).to.has.property("name").and.to.be.eq(`${userMock.first_name} ${userMock.last_name}`);
-        expect(resultado.name).to.be.equal(`${userMock.first_name} ${userMock.last_name}`)
-    }),
-
-    it("Si envio un usuario al DTO me devuelve una propiedad role", () => {
-        let resultado = UserDTO.getUserTokenFrom(userMock)
-
-        expect(resultado).to.has.property("role");
-        expect(resultado.role).to.exist;
-        expect(resultado.apodo).to.be.undefined;
-        console.log(resultado.apodo)
+        expect(resultado).to.has.property("name").and.to.be.eq(`${this.userMock.first_name} ${this.userMock.last_name}`);
+        expect(resultado).to.has.property("role").and.to.be.equal(this.userMock.role);
+        expect(resultado).to.has.property("email").to.be.eq(this.userMock.email)
     });
 })

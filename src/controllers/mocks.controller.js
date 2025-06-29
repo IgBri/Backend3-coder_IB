@@ -10,7 +10,7 @@ import { usersService, petsService } from "../services/index.js";
 const createMockingPet = async (req, res) => {
     try {
         let pets = [];
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 20; i++) {
             let { name, specie, birthDate } = generatePet();
 
             logger.debug("Info de generatePet: ", { name, specie, birthDate });

@@ -1,54 +1,39 @@
 import { createHash, passwordValidation } from "../../src/utils/index.js";
 import { expect } from "chai";
 import { describe, it } from "mocha";
+import { logger } from "../../src/utils/logger.js";
 
-describe("Pruebas funciones de hash", () => {
+describe("bcrypt functions test", async function () {
+    this.validPassword;
+    this.hashPassword;
+    this.invalidPassword;
+    this.user;
 
-    //before,after....?
+    before(async function () {
+        this.validPassword = "123coder";
+        this.invalidPassword = "456coder";
+    })
 
-    describe("Pruebas funcion createHash", () => {
-        it("Si envio una password en texto plano, me devuelve algo diferente", async () => {
-            let password = "123";
-            let resultado = await createHash(password);
+    it("createhash() function test with password", async function () {
+        logger.info("Iniciando test de funcion createHash()")
+        this.hashPassword = await createHash(this.validPassword);
+        this.user = {
+            password: this.hashPassword
+        }
 
-            expect(resultado).not.to.be.eq(password)
-        });
-        it("Si envio una password en texto plano, me devuelve algo de mas de 20 caracteres", async () => {
-            let password = "123";
-            let resultado = await createHash(password);
-
-            expect(resultado.length).to.be.greaterThan(20)
-        });
-        it("Si envio una password en texto plano, me devuelve un hash con codigo bcrypt", async () => {
-            let password = "123";
-            let resultado = await createHash(password);
-
-            console.log("resultado hash: ", resultado)
-            console.log("resultado.slice hash: ", resultado.slice(0, 4))
-
-            expect(resultado.slice(0, 4)).to.be.equal("$2b$")
-        });
+        expect(this.hashPassword).not.to.be.eq(this.validPassword);
+        expect(this.hashPassword.split("$")[1]).to.be.eq("2b")
+        expect(this.hashPassword.split("$")[2]).to.be.eq("10")
     });
-    describe("Pruebas funcion passwordValidation", () => {
-        it("Si envio una contraseña diferente a la hasheada, devuelve false", async () => {
-            let password = "123";
-            let hash = await createHash(password);
-            let errorPassword = "456";
-            let user = {
-                password: errorPassword
-            }
-            let resultado = await passwordValidation(user, errorPassword);
-            expect(resultado).to.be.false
-        })
-        it("Si envio una contraseña igual a la hasheada, devuelve true", async () => {
-            let password = "123";
-            let hash = await createHash(password);
-            let user = {
-                password: hash
-            }
+    it("passwordValidation() function test with invalid password to be error", async function () {
+        logger.info("Iniciando test de funcion passwordValidation() con una contraseña invalida")
+        let resultado = await passwordValidation(this.user, this.invalidPassword);
 
-            let resultado = await passwordValidation(user, password);
-            expect(resultado).to.be.true
-        })
+        expect(resultado).to.be.false;
     });
-})
+    it("passwordValidation() function test with valid password to be success", async function () {
+        logger.info("Iniciando test de funcion passwordValidation() con una contraseña valida")
+        let resultado = await passwordValidation(this.user, this.validPassword);
+        expect(resultado).to.be.true
+    });
+});

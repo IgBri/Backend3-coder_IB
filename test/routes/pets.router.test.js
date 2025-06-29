@@ -22,7 +22,7 @@ describe("Pets router TEST", function () {
             logger.error("PETS ROUTER test Error - before", error)
         };
     });
-    after(async () => {
+    after(async function () {
         try {
             await mongoose.connection.collection("pets").deleteMany();
             await mongoose.connection.close();   

@@ -34,6 +34,25 @@ const schema = new mongoose.Schema({
             }
         ],
         default:[]
+    },
+    documents: {
+        type: [
+            {
+                name: {
+                    type: String,
+                    default: ""
+                },
+                reference: {
+                    type: String,
+                    default: ""
+                }
+            }
+        ],
+        default: []
+    },
+    last_connection: {
+        type: String,
+        default: ""
     }
 })
 

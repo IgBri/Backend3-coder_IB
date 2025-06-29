@@ -17,12 +17,8 @@ describe("Users router TEST", function () {
     before(async function () {
         try {
             await connectDBtest(process.env.MONGO_URL);
-            let user = await generateUser();
-            this.userMock = {
-                first_name: `${user.first_name} - TEST`,
-                last_name:`${user.last_name} - TEST`,
-                role:`${user.role} - TEST`
-            }
+            let {body} = await requester.post("/api/sessions/register").send(await generateUser()); 
+            this.userMockId = body.payload;       
             logger.debug("COMENZANDO CICLO DE TEST");
         } catch (error) {
             logger.error("Error en before users router test", error);
@@ -59,16 +55,29 @@ describe("Users router TEST", function () {
                 expect(user).to.has.property("__v").and.to.be.a("number");
             });
         };
-        this.userMockId = body.payload[0]._id;
     });
 
     it("Test /api/users/:uid - method GET - Validate response one user", async function () {
         logger.info("Iniciando getUser method test")
         let { body, status } = await requester.get(`/api/users/${this.userMockId}`);
+        this.userMock = {
+            first_name: `${body.payload.first_name} - TEST`,
+            last_name:`${body.payload.last_name} - TEST`,
+            role:`${body.payload.role} - TEST`
+        }
 
         expect(status).to.be.eq(200);
         expect(body).to.has.property("status").and.to.be.eq("success");
         expect(body).to.has.property("payload").to.be.an("object");
+        expect(body.payload).to.has.property("_id").and.to.be.a("string");
+        expect(isValidObjectId(body.payload._id)).to.be.true;
+        expect(body.payload).to.has.property("first_name").and.to.be.a("string");
+        expect(body.payload).to.has.property("last_name").and.to.be.a("string");
+        expect(body.payload).to.has.property("email").and.to.be.a("string");
+        expect(body.payload).to.has.property("password").and.to.be.a("string");
+        expect(body.payload).to.has.property("role").and.to.be.a("string");
+        expect(body.payload).to.has.property("pets").and.to.be.a("array");
+        expect(body.payload).to.has.property("__v").and.to.be.a("number");
     });
     it("Test /api/users/:uid - method PUT - Validate custom one user", async function ()  {
         logger.info("Iniciando updateUser method test");
@@ -77,6 +86,16 @@ describe("Users router TEST", function () {
         expect(status).to.be.eq(200);
         expect(body).to.has.property("status").and.to.be.eq("success").and.to.be.a("string");
         expect(body).to.has.property("message").and.to.be.a("string");
+    });
+    it("Test /api/users/:uid/documents - method POST - Validate uploader files", async function () {
+        logger.info("Iniciando uploaderDocument method test");
+        let {body, status, headers} = await requester.post(`/api/users/${this.userMockId}/documents`).attach("userDocument", "test/filesTest/collie_prueba.webp");
+
+        expect(body).to.has.property("status").and.to.be.eq("success");
+        expect(body).to.has.property("message").and.to.be.eq("added document");
+        expect(body).to.has.property("qtyDocs").and.to.be.a("number");
+        expect(body.qtyDocs).to.be.above(0)
+        expect(status).to.be.eq(200);
     });
     it("Test /api/users/:uid - method DELETE - Validate delete one user", async function () {
         logger.info("Iniciando deleteUser method test");

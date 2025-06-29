@@ -10,6 +10,7 @@ export const errorTypesCodes={
     NOT_FOUND: 404, 
     INTERNAL_SERVER_ERROR: 500,
     DATA: 400,
+    CONFLICT_DATA: 409,
 
     getError: 404,
     createError: 400
@@ -24,6 +25,8 @@ export const errorTypes = {
     AUTENTICATION: "authError",
     COOKIE: "cookie must be provided",
     TOKEN: "jwt must be provided",
+    UPDATE_DOC: "updated file error",
+    UNMODIFICABLE_DATA: "Documento inmodificable",
 
     NOT_FOUND: "NOT_FOUND",
     GET_ERROR: "getError",
